@@ -54,8 +54,6 @@ app.post('/add-quote', (req, res) => {
     const quote = getQuote();
     // get the name from the request body then combine it with the quote and send it back to the client
     const name = req.body.name;
-    console.log(req);
-
     translate.translate(quote, { to: 'vi', fetchOptions: { agent } }).then(response => {
         res.json({ message: `${name} nói rằng: ${response.text}` });
     }).catch(error => {
