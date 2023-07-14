@@ -66,7 +66,7 @@ app.get('/get-quote', (req, res) => {
         // sleep for 1 second
         setTimeout(() => {
             res.json({ quote: quote });
-        }, 1000);
+        }, 500);
 
 
     });
@@ -97,7 +97,7 @@ app.post('/add-quote', (req, res) => {
     }).catch(error => {
         setTimeout(() => {
             res.json({ message: `${name} spoke that: ${quote} ` });
-        }, 1000);
+        }, 500);
     });
 });
 
