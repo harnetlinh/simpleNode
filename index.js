@@ -9,6 +9,7 @@ const quote = require('find-quote');
 // package to tranlate text from english to vietnamese
 const translate = require('@vitalets/google-translate-api');
 const { ProxyAgent } = require('proxy-agent');
+const e = require('cors');
 // create a proxy agent with random proxy
 const agent = new ProxyAgent();
 
@@ -18,9 +19,22 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 function getQuote() {
-    const titles = ["Imagination", "Future", "Life", "Love", "Motivational", "Positive", "Success", "Wisdom"];
+    const titles = ["Imagination", "FUTURE", "knowledge", "Death", "brave", "movie", "series", ""];
     // get a random string in array titles with more randomly
     const randomTitle = titles[Math.floor(Math.random() * titles.length)];
+    if (randomTitle == "movie") {
+        return quote.getMovieQuote();
+    } else if (randomTitle == "brave") {
+        return quote.getQuoteWithSeriesName("brave").quote;
+    } else if (randomTitle == "series") {
+        return quote.getSeriesQuote();
+    } else if (randomTitle == "knowledge") {
+        return quote.getQuoteWithAuthor("knowledge").quote;
+    } else if (randomTitle == "Death") {
+        return quote.getQuoteWithMovieName("Death").quote;
+    } else if (randomTitle == "") {
+        return quote.getQuote();
+    }
     return quote.getQuote(randomTitle);
 }
 
