@@ -38,6 +38,24 @@ function getQuote() {
     return quote.getQuote(randomTitle);
 }
 
+// an async function to get a list quote
+async function getListQuote(num) {
+    let quote;
+    var listQuote = [];
+    for (let i = 0; i < num; i++) {
+        quote = getQuote();
+        await translate.translate(quote, { to: 'vi', fetchOptions: { agent } }).then(response => {
+            // console.log(response.text);
+            listQuote.push(response.text);
+        }).catch(error => {
+            // console.log(quote);
+            listQuote.push(quote);
+        });
+
+    }
+    return listQuote;
+}
+
 // create a get route
 app.get('/get-quote', (req, res) => {
     const quote = getQuote();
@@ -48,6 +66,21 @@ app.get('/get-quote', (req, res) => {
         res.json({ quote: quote });
     });
 });
+
+app.get('/get-list-quote', (req, res) => {
+    let quote;
+    let num = 1;
+    if ((req.params.num || req.query.num) && (req.params.num > 0 || req.query.num > 0)) {
+        num = req.params.num || req.query.num;
+    }
+    var listQuote = [];
+    getListQuote(num).then(response => {
+        listQuote = response;
+        res.json(listQuote);
+    });
+});
+
+
 
 // create a post route
 app.post('/add-quote', (req, res) => {
