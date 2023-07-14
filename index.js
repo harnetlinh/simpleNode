@@ -63,7 +63,12 @@ app.get('/get-quote', (req, res) => {
     translate.translate(quote, { to: 'vi', fetchOptions: { agent } }).then(response => {
         res.json({ quote: response.text });
     }).catch(error => {
-        res.json({ quote: quote });
+        // sleep for 1 second
+        setTimeout(() => {
+            res.json({ quote: quote });
+        }, 1000);
+
+
     });
 });
 
@@ -90,7 +95,9 @@ app.post('/add-quote', (req, res) => {
     translate.translate(quote, { to: 'vi', fetchOptions: { agent } }).then(response => {
         res.json({ message: `${name} nói rằng: ${response.text}` });
     }).catch(error => {
-        res.json({ message: `${name} spoke that: ${quote} ` });
+        setTimeout(() => {
+            res.json({ message: `${name} spoke that: ${quote} ` });
+        }, 1000);
     });
 });
 
